@@ -1,6 +1,4 @@
-#ifndef FIRSTLIBRARYPROJECT_LONGNUMBER_HPP
-#define FIRSTLIBRARYPROJECT_LONGNUMBER_HPP
-
+#pragma once
 #include <iostream>
 #include <iomanip>
 #include <vector>
@@ -38,6 +36,7 @@ public:
     void initFromString(const std::string& stringValue);
     void removeZeroes();
 
+    friend LongNumber operator "" _ln(const char* string);
 
 
 private:
@@ -47,4 +46,3 @@ private:
 
 };
 
-#endif //FIRSTLIBRARYPROJECT_LONGNUMBER_HPP

@@ -29,3 +29,14 @@ LongNumber::LongNumber(const std::string &stringValue)
     initFromString(stringValue);
     removeZeroes();
 }
+
+LongNumber operator""_ln(const char* string)
+{
+    LongNumber s(string);
+    return s;
+}
+//LongNumber operator ""_ln(const char* string)
+//{
+//    LongNumber s(string);
+//    return s;
+//}

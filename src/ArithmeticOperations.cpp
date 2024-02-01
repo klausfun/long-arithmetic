@@ -141,3 +141,23 @@ LongNumber LongNumber::operator-(const LongNumber& other) const
         return *this + (-other);
     }
 }
+
+LongNumber LongNumber::operator/(const LongNumber& other) const
+{
+    size_t len1 = data.size(), len2 = other.data.size();
+    size_t exp1 = exponent, exp2 = other.exponent;
+    size_t iter = 0;
+
+    LongNumber res;
+    res.sign = sign * other.sign;
+
+    if (exp1 < exp2)
+    {
+        res.exponent = 1;
+        for (size_t i = 0; i < (exp1 - exp2); i++)
+        {
+            res.data[iter++] = 0;
+        }
+    }
+
+}
