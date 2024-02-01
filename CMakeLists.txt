@@ -9,8 +9,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Добавление библиотеки
 add_library(LongArithmetic SHARED
-        src/LongNumber.cpp
         hpp_files/LongNumber.hpp
+        src/AuxiliaryMethods.cpp
+        src/ComparisonOperations.cpp
+        src/initFromString.cpp
+        src/toString.cpp
+        src/ArithmeticOperations.cpp
+        src/LongNumber.cpp
+        src/PrintLongNumber.cpp
 )
 
 # Добавление исполняемого файла
