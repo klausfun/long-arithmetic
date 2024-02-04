@@ -72,8 +72,15 @@ LongNumber LongNumber::operator+(const LongNumber& other) const
         size_t iter = max_size;
         for (size_t i = max_size; i > 0; i--)
         {
-            res.data[iter--] = remains + (data1[i-1] + data2[i-1]) % 10;
-            remains = (data1[i-1] + data2[i-1] + remains) / 10;
+            int sum = data1[i-1] + data2[i-1] + remains;
+            res.data[i] = sum % 10;
+            remains = sum / 10;
+            iter--;
+        }
+
+        if (remains > 0)
+        {
+            res.data[iter] = remains;
         }
 
         res.exponent = max_exp + 1;
@@ -122,9 +129,10 @@ LongNumber LongNumber::operator-(const LongNumber& other) const
         size_t iter = max_size;
         for (size_t i = max_size; i > 0; i--)
         {
-            res.data[iter--] = ((data1[i-1] - remains - data2[i-1]) + 10) % 10;
+            res.data[iter] = ((data1[i-1] - remains - data2[i-1]) + 10) % 10;
             if ((data1[i-1] - remains - data2[i-1]) < 0) remains = 1;
             else remains = 0;
+            iter--;
         }
 
         res.exponent = max_exp + 1;
@@ -144,20 +152,108 @@ LongNumber LongNumber::operator-(const LongNumber& other) const
 
 LongNumber LongNumber::operator/(const LongNumber& other) const
 {
-    size_t len1 = data.size(), len2 = other.data.size();
-    size_t exp1 = exponent, exp2 = other.exponent;
-    size_t iter = 0;
+    LongNumber res = *this * other.inverse();
 
-    LongNumber res;
-    res.sign = sign * other.sign;
+    size_t i = res.data.size() - 1 - std::max((long) 0, exponent);
+    size_t n = std::max((long) 0, res.exponent);
 
-    if (exp1 < exp2)
+    if (i > n && res.data[i] == 9)
     {
-        res.exponent = 1;
-        for (size_t i = 0; i < (exp1 - exp2); i++)
+        while (i > n && res.data[i] == 9)
+            i--;
+
+        if (res.data[i] == 9)
         {
-            res.data[iter++] = 0;
+            res.data.erase(res.data.begin() + n, res.data.end());
+            res = res + res.sign;
+        }
+        else
+        {
+            res.data.erase(res.data.begin() + i + 1, res.data.end());
+            res.data[i]++;
         }
     }
 
+    return res;
 }
+
+//LongNumber LongNumber::operator/(const LongNumber& other) const
+//{
+//    if (other == 0)
+//    {
+//        std::cout << "Деление на 0!" << std::endl;
+//        return 0;
+//    }
+//
+//    LongNumber numerator(*this);
+//    LongNumber denominator(other);
+//    LongNumber result;
+//
+//    // Устанавливаем знак результата
+//    result.sign = sign * other.sign;
+//
+//    // Избавляемся от лишних нулей в числителе
+//    while (numerator != 0 && numerator.data.back() == 0)
+//        numerator.data.pop_back();
+//
+//    // Избавляемся от лишних нулей в знаменателе
+//    while (numerator != 0 && denominator.data.back() == 0)
+//        denominator.data.pop_back();
+//
+//    // Если числитель меньше знаменателя, результат равен 0
+//    if (numerator < denominator)
+//        return 0;
+//
+//    // Вычисляем разницу в экспонентах числителя и знаменателя
+//    result.exponent = numerator.exponent - denominator.exponent;
+//
+//    // Выравниваем экспоненты, добавляя нули к числителю
+//    while (numerator.exponent > denominator.exponent)
+//    {
+//        denominator.data.insert(denominator.data.begin(), 0);
+//        denominator.exponent++;
+//    }
+//
+//    size_t quotientSize = numerator.data.size() - denominator.data.size() + 1;
+//    result.data.resize(quotientSize, 0);
+//
+//    LongNumber tempDenominator;
+//
+//    for (size_t i = 0; i < quotientSize; ++i)
+//    {
+//        int quotientDigit = 0;
+//
+//        while (numerator >= (tempDenominator + 1) * denominator)
+//        {
+//            tempDenominator = tempDenominator + 1;
+//
+//            // Дополнительная проверка на выход за пределы массива
+//            if (tempDenominator.data.size() > quotientSize)
+//            {
+//                std::cerr << "Error: tempDenominator.data size exceeds quotientSize." << std::endl;
+//                std::abort();
+//            }
+//
+//            quotientDigit++;
+//
+//            // Дополнительная проверка на возможность бесконечного цикла
+//            if (quotientDigit > 1000000)
+//            {
+//                std::cerr << "Error: Potential infinite loop detected." << std::endl;
+//                std::abort();
+//            }
+//        }
+//
+//        result.data[i] = quotientDigit;
+//        numerator = numerator - tempDenominator * denominator;
+//
+//        std::cout << "Debug Info: numerator = " << numerator << ", denominator = " << denominator << std::endl;
+//
+//        tempDenominator.data.clear();
+//        tempDenominator.exponent = 0;
+//    }
+//
+//    result.removeZeroes();
+//
+//    return result;
+//}

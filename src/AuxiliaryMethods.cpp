@@ -31,3 +31,65 @@ void LongNumber::removeZeroes() {
     }
 }
 
+LongNumber LongNumber::inverse() const
+{
+    if (*this == 0)
+    {
+        throw std::runtime_error("LongNumber::inverse() - division by zero!");
+    }
+
+    LongNumber x(*this);
+
+    LongNumber res;
+    res.exponent = 1;
+    res.data = std::vector<int>();
+
+    if (x.sign == -1)
+    {
+        x.sign = 1;
+        res.sign = -1;
+    }
+
+    while (x < 1)
+    {
+        x.exponent++;
+        res.exponent++;
+    }
+
+    LongNumber d("1");
+
+    while (d < x)
+        d.exponent++;
+
+    res.exponent -= d.exponent - 1;
+
+    size_t numbers = 0;
+    size_t maxNumbers = approx_div + res.exponent;
+
+    do
+    {
+        int div = 0;
+
+        while (d >= x)
+        {
+            div++;
+            d = d - x;
+        }
+
+        d.exponent++;
+        d.removeZeroes();
+
+        res.data.push_back(div);
+        numbers++;
+    } while (!(d == 0) && numbers < maxNumbers);
+
+    return res;
+}
+
+//void LongNumber::RoundinUp()
+//{
+//    while (data.size() - exponent > LongNumber::precision_num)
+//    {
+//        data.pop_back();
+//    }
+//}

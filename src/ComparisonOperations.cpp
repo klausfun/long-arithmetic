@@ -1,5 +1,15 @@
 #include "../hpp_files/LongNumber.hpp"
 
+LongNumber LongNumber::operator=(const LongNumber& other)
+{
+    if (this != &other) {
+        sign = other.sign;
+        data = other.data;
+        exponent = other.exponent;
+    }
+    return *this;
+}
+
 bool LongNumber::operator>(const LongNumber& other) const
 {
     if (sign != other.sign) return sign > other.sign;
@@ -49,4 +59,40 @@ bool LongNumber::operator<=(const LongNumber& other) const
 bool LongNumber::operator>=(const LongNumber& other) const
 {
     return (*this == other || *this > other);
+}
+
+bool LongNumber::operator>(const long double& other) const
+{
+    LongNumber otherAsLongNumber(other);
+    return (*this) > otherAsLongNumber;
+}
+
+bool LongNumber::operator<(const long double& other) const
+{
+    LongNumber otherAsLongNumber(other);
+    return (*this) < otherAsLongNumber;
+}
+
+bool LongNumber::operator==(const long double& other) const
+{
+    LongNumber otherAsLongNumber(other);
+    return (*this) == otherAsLongNumber;
+}
+
+bool LongNumber::operator!=(const long double& other) const
+{
+    LongNumber otherAsLongNumber(other);
+    return (*this) != otherAsLongNumber;
+}
+
+bool LongNumber::operator<=(const long double& other) const
+{
+    LongNumber otherAsLongNumber(other);
+    return (*this) <= otherAsLongNumber;
+}
+
+bool LongNumber::operator>=(const long double& other) const
+{
+    LongNumber otherAsLongNumber(other);
+    return (*this) >= otherAsLongNumber;
 }

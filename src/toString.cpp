@@ -5,6 +5,7 @@ std::string LongNumber::toString() const
     std::stringstream ss;
     if (sign == -1) ss << '-';
 
+    size_t count = 0;
     if (exponent > 0)
     {
         size_t iter = 0;
@@ -27,7 +28,11 @@ std::string LongNumber::toString() const
         {
             ss << ".";
             while (iter < len)
+            {
+                count++;
+                if (count > LongNumber::precision_num) break;
                 ss << data[iter++];
+            }
         }
     }
     else
@@ -41,8 +46,11 @@ std::string LongNumber::toString() const
             ss << "0";
         }
 
+        count += (-exponent);
         for (size_t i = 0; i < len; i++)
         {
+            count++;
+            if (count > LongNumber::precision_num) break;
             ss << data[i];
         }
     }

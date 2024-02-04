@@ -30,9 +30,9 @@ LongNumber::LongNumber(const std::string &stringValue)
     removeZeroes();
 }
 
-LongNumber operator""_ln(const char* string)
+LongNumber operator""_ln(const char* str)
 {
-    LongNumber s(string);
+    LongNumber s(str);
     return s;
 }
 //LongNumber operator ""_ln(const char* string)

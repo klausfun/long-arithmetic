@@ -4,10 +4,16 @@
 #include <vector>
 #include <sstream>
 #include <string>
+#include <cmath>
+
+class LongNumber;
+LongNumber operator""_ln(const char* string);
 
 class LongNumber
 {
 public:
+    static size_t precision_num;
+
     LongNumber();  // Конструктор по умолчанию
     LongNumber(int sign, const std::vector<int>& digits, long exponent);
     LongNumber(const std::string &stringValue); // Конструктор из строки
@@ -21,6 +27,16 @@ public:
     bool operator>=(const LongNumber& other) const;
     bool operator<=(const LongNumber& other) const;
 
+    bool operator>(const long double& other) const;
+    bool operator<(const long double& other) const;
+    bool operator==(const long double& other) const;
+    bool operator!=(const long double& other) const;
+    bool operator>=(const long double& other) const;
+    bool operator<=(const long double& other) const;
+
+    LongNumber operator=(const LongNumber& other);
+    LongNumber operator=(const long double& other);
+
     // Арифметические операции
     LongNumber operator+(const LongNumber& other) const;
     LongNumber operator-(const LongNumber& other) const;
@@ -29,20 +45,20 @@ public:
 
     LongNumber operator-() const; // унарный минус
 
-
-    std::string toString() const;  // Метод для преобразования в строку
-    friend std::ostream& operator<<(std::ostream& os, const LongNumber& value);
+    LongNumber inverse() const; // обратное число
 
     void initFromString(const std::string& stringValue);
-    void removeZeroes();
+    void removeZeroes(); // удаляет лишние нули слева и справа
+    std::string toString() const;  // метод для преобразования в строку
+    friend std::ostream& operator<<(std::ostream& os, const LongNumber& value);
 
-    friend LongNumber operator "" _ln(const char* string);
-
+    friend LongNumber operator""_ln(const char* string);
 
 private:
+    const size_t approx_div = 1000;
+
     int sign;// Знак числа
     std::vector<int> data; // Вектор цифр (без точки)
     long exponent; // Экспонента
-
+    void RoundinUp();
 };
-
