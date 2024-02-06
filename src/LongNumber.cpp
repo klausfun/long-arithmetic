@@ -20,13 +20,14 @@ LongNumber::LongNumber(long double value) {
     ss << std::setprecision(15) << value;
 
     initFromString(ss.str());
-
+    rounding();
     removeZeroes();
 }
 
 LongNumber::LongNumber(const std::string &stringValue)
 {
     initFromString(stringValue);
+    rounding();
     removeZeroes();
 }
 

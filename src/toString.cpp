@@ -6,7 +6,7 @@ std::string LongNumber::toString() const
     if (sign == -1) ss << '-';
 
     size_t count = 0;
-    if (exponent > 0)
+    if (exponent >= 0)
     {
         size_t iter = 0;
         size_t exp = exponent;
@@ -54,6 +54,7 @@ std::string LongNumber::toString() const
             ss << data[i];
         }
     }
+
 
     return ss.str();
 }

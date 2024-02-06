@@ -1,7 +1,6 @@
 #include "../hpp_files/LongNumber.hpp"
 #include <iostream>
 #include <chrono>
-#include <cmath>
 
 size_t LongNumber::precision_num;
 
@@ -18,34 +17,46 @@ void TestCompMore();
 void TestCompMoreOrEq();
 void TestCompLessOrEq();
 
-LongNumber arctanSeries(const LongNumber& x, int terms)
+
+
+//LongNumber arctan(const LongNumber& x, int terms)
+//{
+//    LongNumber result("0");
+//    LongNumber power = x;
+//    bool subtractTerm = true;
+//    LongNumber x2 = x * x;
+//    for (int i = 1; i <= terms + 5; i += 2)
+//    {
+//        LongNumber term = power / i;
+//
+//        if (subtractTerm)
+//        {
+//            result = result - term;
+//        }
+//        else
+//        {
+//            result = result + term;
+//        }
+//
+//        power = power * x2;
+//        subtractTerm = !subtractTerm;
+//    }
+//
+//    return result;
+//}
+
+LongNumber calculatePiMachin(int precision)
 {
-    LongNumber result("0");
-    LongNumber power = x;
-    bool subtractTerm = true;
-    LongNumber x2 = x * x;
-    for (int i = 1; i <= terms + 5; i += 2)
-    {
-        LongNumber term = power / i;
+    LongNumber pi("0");
+    LongNumber term1("1");
+    term1 = term1.arctan(LongNumber("1") / 5, precision) * 4;
 
-        if (subtractTerm)
-            result = result - term;
-        else
-            result = result + term;
+    LongNumber term2("1");
+    term2 = term2.arctan(LongNumber("1") / 239, precision);
 
-        power = power * x2;
-        subtractTerm = !subtractTerm;
-    }
+    pi = (term1 - term2) * 4;
 
-    return result;
-}
-
-// Функция для вычисления числа π по формуле Мачина
-LongNumber calculatePiMachinFormula(int terms)
-{
-    LongNumber pi_over_4 = LongNumber("4") * arctanSeries(LongNumber("1") / LongNumber("5"), terms) -
-                           arctanSeries(LongNumber("1") / LongNumber("239"), terms);
-    return pi_over_4 * LongNumber("4");
+    return pi;
 }
 
 int main()
@@ -66,22 +77,22 @@ int main()
 //    TestCompMore();
 //    TestCompMoreOrEq();
 //    TestCompLessOrEq();
-//    std::cout <<
+
     // Расчет числа Пи
 
     // Получаем текущее время
     auto start_time = std::chrono::high_resolution_clock::now();
-    LongNumber c("1");
-    LongNumber pi = arctanSeries(c, 5);
-//    LongNumber pi = calculatePiMachinFormula(LongNumber::precision_num);
+
+    LongNumber pi = calculatePiMachin(LongNumber::precision_num);
+
     std::cout << "pi = " << pi << std::endl;
     // Получаем текущее время после выполнения кода
     auto end_time = std::chrono::high_resolution_clock::now();
 
     // Вычисляем разницу между временем начала и конца
-    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
 
     // Выводим результат
-    std::cout << "Time: " << duration.count() << " microseconds" << std::endl;
+    std::cout << "Time: " << duration.count() << " milliseconds" << std::endl;
     return 0;
 }

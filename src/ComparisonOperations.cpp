@@ -7,6 +7,7 @@ LongNumber LongNumber::operator=(const LongNumber& other)
         data = other.data;
         exponent = other.exponent;
     }
+
     return *this;
 }
 
@@ -20,9 +21,13 @@ bool LongNumber::operator>(const LongNumber& other) const
         return (sign == 1) ? (exponent > other.exponent) : !(exponent > other.exponent);
     }
 
-
     size_t len1 = data.size(), len2 = other.data.size();
+
+    if (len1 > LongNumber::precision_num + 5) len1 = LongNumber::precision_num + 5;
+    if (len2 > LongNumber::precision_num + 5) len2 = LongNumber::precision_num + 5;
+
     size_t min_size = std::min(len1, len2);
+
 
     for (size_t i = 0; i < min_size; i++)
     {

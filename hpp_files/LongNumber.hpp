@@ -45,10 +45,13 @@ public:
 
     LongNumber operator-() const; // унарный минус
 
+    LongNumber arctan(const LongNumber &x, int terms);
     LongNumber inverse() const; // обратное число
 
-    void initFromString(const std::string& stringValue);
+    void rounding();
     void removeZeroes(); // удаляет лишние нули слева и справа
+    void initFromString(const std::string& stringValue);
+
     std::string toString() const;  // метод для преобразования в строку
     friend std::ostream& operator<<(std::ostream& os, const LongNumber& value);
 
@@ -60,5 +63,4 @@ private:
     int sign;// Знак числа
     std::vector<int> data; // Вектор цифр (без точки)
     long exponent; // Экспонента
-    void RoundinUp();
 };

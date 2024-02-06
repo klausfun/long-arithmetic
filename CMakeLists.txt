@@ -17,6 +17,7 @@ add_library(LongArithmetic SHARED
         src/ArithmeticOperations.cpp
         src/LongNumber.cpp
         src/PrintLongNumber.cpp
+        src/Tests.cpp
 )
 
 # Добавление исполняемого файла
