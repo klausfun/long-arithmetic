@@ -4,7 +4,6 @@
 #include <vector>
 #include <sstream>
 #include <string>
-#include <cmath>
 
 class LongNumber;
 LongNumber operator""_ln(const char* string);
@@ -34,8 +33,7 @@ public:
     bool operator>=(const long double& other) const;
     bool operator<=(const long double& other) const;
 
-    LongNumber operator=(const LongNumber& other);
-    LongNumber operator=(const long double& other);
+    LongNumber& operator=(const LongNumber& other);
 
     // Арифметические операции
     LongNumber operator+(const LongNumber& other) const;

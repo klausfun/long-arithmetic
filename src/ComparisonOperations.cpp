@@ -1,6 +1,6 @@
 #include "../hpp_files/LongNumber.hpp"
 
-LongNumber LongNumber::operator=(const LongNumber& other)
+LongNumber &LongNumber::operator=(const LongNumber& other)
 {
     if (this != &other) {
         sign = other.sign;

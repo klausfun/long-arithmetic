@@ -36,8 +36,3 @@ LongNumber operator""_ln(const char* str)
     LongNumber s(str);
     return s;
 }
-//LongNumber operator ""_ln(const char* string)
-//{
-//    LongNumber s(string);
-//    return s;
-//}

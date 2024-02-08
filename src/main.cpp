@@ -17,34 +17,6 @@ void TestCompMore();
 void TestCompMoreOrEq();
 void TestCompLessOrEq();
 
-
-
-//LongNumber arctan(const LongNumber& x, int terms)
-//{
-//    LongNumber result("0");
-//    LongNumber power = x;
-//    bool subtractTerm = true;
-//    LongNumber x2 = x * x;
-//    for (int i = 1; i <= terms + 5; i += 2)
-//    {
-//        LongNumber term = power / i;
-//
-//        if (subtractTerm)
-//        {
-//            result = result - term;
-//        }
-//        else
-//        {
-//            result = result + term;
-//        }
-//
-//        power = power * x2;
-//        subtractTerm = !subtractTerm;
-//    }
-//
-//    return result;
-//}
-
 LongNumber calculatePiMachin(int precision)
 {
     LongNumber pi("0");
@@ -59,24 +31,25 @@ LongNumber calculatePiMachin(int precision)
     return pi;
 }
 
+
 int main()
 {
     std::cout << "Please specify the precision of the decimal part of the number:" << std::endl;
     std::cin >> LongNumber::precision_num;
 
     // Тесты:
-//    TestSum();
-//    TestSub();
-//    TestMul();
-//    TestDiv();
-//    TestRemoveZeros();
-//    TestInverse();
-//    TestEqual();
-//    TestNotEqual();
-//    TestCompLess();
-//    TestCompMore();
-//    TestCompMoreOrEq();
-//    TestCompLessOrEq();
+    TestSum();
+    TestSub();
+    TestMul();
+    TestDiv();
+    TestRemoveZeros();
+    TestInverse();
+    TestEqual();
+    TestNotEqual();
+    TestCompLess();
+    TestCompMore();
+    TestCompMoreOrEq();
+    TestCompLessOrEq();
 
     // Расчет числа Пи
 
