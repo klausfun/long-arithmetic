@@ -1,21 +1,9 @@
-#include "../hpp_files/LongNumber.hpp"
+#include "hpp_files/LongNumber.hpp"
 #include <iostream>
 #include <chrono>
+#include <cstdlib>
 
 size_t LongNumber::precision_num;
-
-void TestSum();
-void TestSub();
-void TestMul();
-void TestDiv();
-void TestRemoveZeros();
-void TestInverse();
-void TestEqual();
-void TestNotEqual();
-void TestCompLess();
-void TestCompMore();
-void TestCompMoreOrEq();
-void TestCompLessOrEq();
 
 LongNumber calculatePiMachin(int precision)
 {
@@ -31,27 +19,13 @@ LongNumber calculatePiMachin(int precision)
     return pi;
 }
 
-
 int main()
 {
-    std::cout << "Please specify the precision of the decimal part of the number:" << std::endl;
-    std::cin >> LongNumber::precision_num;
-
-    // Тесты:
-    TestSum();
-    TestSub();
-    TestMul();
-    TestDiv();
-    TestRemoveZeros();
-    TestInverse();
-    TestEqual();
-    TestNotEqual();
-    TestCompLess();
-    TestCompMore();
-    TestCompMoreOrEq();
-    TestCompLessOrEq();
-
     // Расчет числа Пи
+
+    // Получаем значение точности из переменной окружения PI_ITERATIONS
+    const char* pi_iterations_str = std::getenv("PI_ITERATIONS");
+    LongNumber::precision_num = (pi_iterations_str != nullptr) ? std::atoi(pi_iterations_str) : 100;
 
     // Получаем текущее время
     auto start_time = std::chrono::high_resolution_clock::now();
